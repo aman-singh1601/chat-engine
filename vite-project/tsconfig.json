@@ -23,6 +23,7 @@
     "paths": {
       "@/*": ["./src/*"]
   },
+   "typeRoots": ["./src/types", "./types"]
   },
   
   "include": ["src"],
