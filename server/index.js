@@ -4,11 +4,19 @@ import 'dotenv/config'
 import  mongoose from 'mongoose'
 import cors from 'cors'
 
+
+//importing the router
+import userRouter from './routes/users.js'
+
 const app=express();
 
 app.use(bodyParser.json({limit:'300mb',extended:true}))
 app.use(bodyParser.urlencoded({limit:'300mb',extended:true}))
 app.use(cors());
+
+
+app.use('/user', userRouter)
+
 
 const PORT =process.env.PORT;
 const CONNECTION_URL=process.env.CONNECTION_URL;
