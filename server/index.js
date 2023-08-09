@@ -14,7 +14,7 @@ app.use(bodyParser.json({limit:'300mb',extended:true}))
 app.use(bodyParser.urlencoded({limit:'300mb',extended:true}))
 app.use(cors());
 
-
+app.use('/uploads',express.static('uploads'))
 app.use('/user', userRouter)
 
 
