@@ -39,8 +39,8 @@ export function AvatarDemo({ pic, name, email }: AvatarProps) {
 
   const logOut = () => {
     dispatch(authLogout(user));
-    window.location.assign("/");
     setUser({});
+    window.location.assign("/");
   };
 
   useEffect(() => {
@@ -55,10 +55,10 @@ export function AvatarDemo({ pic, name, email }: AvatarProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className="flex space-x-2 items-center hover:bg-slate-100"
+          className="flex space-x-2 items-center duration-300 active:bg-white outline-none"
           variant="ghost"
         >
-          <Avatar>
+          <Avatar className="h-8 w-8">
             <AvatarImage
               src={`http://localhost:5000/uploads/profilePic/${pic}`}
               alt="@shadcn"
