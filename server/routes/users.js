@@ -1,6 +1,7 @@
 import express from 'express'
-import { login, signup } from '../controllers/usersController.js';
+import { allusers, login, signup } from '../controllers/usersController.js';
 import multer from 'multer'
+import auth from '../middlewares/authMiddleware.js';
 const router=express.Router();
 
 const storage = multer.diskStorage({
@@ -15,5 +16,6 @@ const upload = multer({ storage: storage })
 
 router.post('/login',login);
 router.post('/signup',upload.single('pic'),signup);
+router.get('/findusers',auth,allusers)
 
 export default router;
