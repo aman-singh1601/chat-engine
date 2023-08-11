@@ -15,10 +15,8 @@ import axios from "../../axios";
 import { toast } from "react-hot-toast/headless";
 import { useDispatch } from "react-redux";
 import { authSignin } from "@/features/userSlice";
-import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(false);
@@ -50,6 +48,7 @@ const HomePage = () => {
         formdata.append("confirmPassword", data.confirmPassword);
         formdata.append("email", data.email);
         const res = await axios.post("/user/signup", formdata);
+        console.log(res.data);
         dispatch(authSignin(res.data));
       } else {
         const newdata = {
@@ -57,6 +56,7 @@ const HomePage = () => {
           password: `${data.password}`,
         };
         const res = await axios.post("user/login", newdata);
+        console.log(res);
         dispatch(authSignin(res.data));
       }
       window.location.assign("/chats");

@@ -50,6 +50,7 @@ const Sheetcontainer = ({ children }: { children: React.ReactNode }) => {
           <div className="flex h-8 space-x-4">
             <Input
               className=" outline-none  basis-[80%] ring-0 focus:ring-0  w-[80%] md:w-[200px]"
+              required
               onChange={(e) => setSearch(e.target.value)}
             />
             <Button
@@ -60,7 +61,7 @@ const Sheetcontainer = ({ children }: { children: React.ReactNode }) => {
               Go
             </Button>
           </div>
-          <div className="py-4">
+          <div className="py-4 no-scollbar">
             {users.length > 0 ? (
               users.map((user) => (
                 <SearchUsers

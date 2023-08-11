@@ -37,13 +37,13 @@ const SearchUsers = ({ name, email, pic, userId }: searchUserProps) => {
           src={`http://localhost:5000/uploads/profilePic/${pic}`}
           alt="@shadcn"
         />
-        <AvatarFallback>{`${name[0].toUpperCase()}${name
-          .split(" ")[1][0]
-          .toUpperCase()}`}</AvatarFallback>
+        <AvatarFallback>{`${name[0]?.toUpperCase()}${name
+          ?.split(" ")[1][0]
+          ?.toUpperCase()}`}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col">
         <span className="font-sans font-medium text-lg">
-          {name.toUpperCase()}
+          {name?.toUpperCase()}
         </span>
         <span className="text-sm">
           <strong>Email : </strong>
