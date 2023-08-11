@@ -4,7 +4,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -13,6 +12,7 @@ import { Button } from "./button";
 import { Input } from "./input";
 import axios from "../../axios";
 import SearchUsers from "../ChatsComponents/SearchUsers/SearchUsers";
+import { useDispatch } from "react-redux";
 
 type userData = {
   email: string;
@@ -20,7 +20,6 @@ type userData = {
   pic: string;
   _id: string;
 };
-type userDataProps = {};
 const Sheetcontainer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -50,7 +49,7 @@ const Sheetcontainer = ({ children }: { children: React.ReactNode }) => {
         <div className="py-4">
           <div className="flex h-8 space-x-4">
             <Input
-              className=" outline-none  ring-0 focus:ring-0  w-[80%] md:w-[200px]"
+              className=" outline-none  basis-[80%] ring-0 focus:ring-0  w-[80%] md:w-[200px]"
               onChange={(e) => setSearch(e.target.value)}
             />
             <Button
@@ -66,6 +65,7 @@ const Sheetcontainer = ({ children }: { children: React.ReactNode }) => {
               users.map((user) => (
                 <SearchUsers
                   key={user?._id}
+                  userId={user?._id}
                   name={user?.name}
                   pic={user?.pic}
                   email={user?.email}

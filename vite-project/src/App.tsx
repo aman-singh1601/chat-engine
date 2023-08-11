@@ -16,7 +16,6 @@ function App() {
       setUser(true);
     } else setUser(false);
   }, [localStorage]);
-  console.log("app_user", user);
   return (
     <>
       <Router>

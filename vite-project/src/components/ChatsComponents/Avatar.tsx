@@ -34,12 +34,13 @@ export function AvatarDemo({ pic, name, email }: AvatarProps) {
   const location = useLocation();
 
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile") || "{}")
+    // @ts-ignore
+    JSON.parse(localStorage.getItem("profile"))
   );
 
   const logOut = () => {
-    dispatch(authLogout(user));
-    setUser({});
+    dispatch(authLogout());
+    setUser("");
     window.location.assign("/");
   };
 
