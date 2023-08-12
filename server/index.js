@@ -7,6 +7,7 @@ import cors from 'cors'
 
 //importing the router
 import userRouter from './routes/users.js'
+import chatsRouter from './routes/chats.js'
 
 const app=express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use('/uploads',express.static('uploads'))
 app.use('/user', userRouter)
+app.use('/chats', chatsRouter)
 
 
 const PORT =process.env.PORT;

@@ -19,19 +19,12 @@ import FlipMove from "react-flip-move";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
-type groupProps = {
-  name: string;
-  friends: string[] | [];
-};
-const groupDataState: groupProps = {
-  name: "",
-  friends: [],
-};
-
 export function CreateGroupChat({ children }: { children: React.ReactNode }) {
   const ref = useRef();
+  const [loading, setLoading] = useState(false);
 
-  const [groupData, setGroupData] = useState(groupDataState);
+  const [name, setName] = useState("");
+  const [users, setUsers] = useState<User[] | []>([]);
   const [friend, setFriend] = useState("");
   const [friendList, setFriendList] = useState<User[] | null>(null);
   const [displayList, setDisplayList] = useState<User[] | null>(null);
@@ -52,11 +45,41 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
 
   const handleUserClick = (user: User | undefined) => {
     if (user) {
-      const updatedFriends = [...groupData.friends, user.name];
-      setGroupData({ ...groupData, friends: updatedFriends });
-      console.log(groupData);
+      const newUsersList = [...users, user];
+      setUsers(newUsersList);
+      //removing selected friends from display
+      if (displayList) {
+        const newdisplayList = displayList?.filter(
+          (friend) => friend.email != user.email
+        );
+        setDisplayList(newdisplayList);
+      }
+      if (friendList) {
+        const newFriendList = friendList?.filter(
+          (friend) => friend.email != user.email
+        );
+        setFriendList(newFriendList);
+      }
     }
   };
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      console.log(users);
+      console.log("name", name);
+      const { data } = await axios.post("/chats/creategroupchat", {
+        name,
+        users,
+      });
+      console.log(data);
+    } catch (err: any) {
+      console.log(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -67,7 +90,7 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
             Create a group with your frineds
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Name
@@ -75,10 +98,8 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
             <Input
               id="name"
               name="name"
-              value={`${groupData.name}`}
-              onChange={(e) =>
-                setGroupData({ ...groupData, [e.target.name]: e.target.value })
-              }
+              value={`${name}`}
+              onChange={(e) => setName(e.target.value)}
               className="col-span-3"
             />
           </div>
@@ -94,14 +115,22 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
             />
           </div>
           <div className="flex flex-col py-4">
-            <div className="flex flex-wrap space-x-2 justify-start">
-              {groupData.friends.map((friend) => (
+            <div className=" flex flex-nowrap w-[380px] space-x-2 overflow-auto no-scrollbar">
+              {users?.map((friend, index) => (
                 <Badge
-                  variant="destructive"
-                  className="flex space-x-2 my-1 text-sm items-center cursor-pointer"
+                  key={index}
+                  variant="default"
+                  className="flex space-x-2 my-1 h-5 w-fit text-sm items-center cursor-pointer rounded-sm"
                 >
-                  <span>{friend}</span>
-                  <X className="h-4 w-4" />
+                  <span className="text-white mr-1">
+                    {" "}
+                    {friend?.name.split(" ")[0]}
+                  </span>
+                  <span className="text-white">
+                    {" "}
+                    {friend?.name.split(" ")[1]}
+                  </span>
+                  <X className="h-4 w-4 text-white" />
                 </Badge>
               ))}
             </div>
@@ -140,7 +169,9 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Create</Button>
+          <Button onClick={handleSubmit} disabled={loading}>
+            Create
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

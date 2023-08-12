@@ -4,13 +4,12 @@ import jwt from 'jsonwebtoken'
 export const login=async(req,res)=>{
     const {email,password}=req.body;
     try{
-        const existingUser=await User.findOne({email});
+        var existingUser=await User.findOne({email})
         if(!existingUser)
            return res.status(404).json({message:'User dosent exist'});
         if(password!==existingUser.password){
             return res.status(404).json({message:'Invalid credentials'}); 
         }
-
         const token=jwt.sign({
             email:existingUser.email,
             id:existingUser._id,
@@ -24,6 +23,7 @@ export const login=async(req,res)=>{
 }
 export const signup=async(req,res)=>{
     const {fName,lName,email,password,confirmPassword}=req.body;
+    console.log(req.body)
     const pic=req.file ? req.file.filename:null;
     console.log(req.file)
     try{
@@ -39,6 +39,8 @@ export const signup=async(req,res)=>{
                 name:`${fName} ${lName}`,
                 pic,
             })
+            delete result.password;
+
             const token=jwt.sign({
             email:result.email,
             id:result._id,
@@ -47,7 +49,7 @@ export const signup=async(req,res)=>{
             res.status(200).json({result,token})
 
     }catch(err){
-        res.status(500).json({message:"USER_SIGNUP"})
+        res.status(500).json(err.message)
     }
 }
 

@@ -18,4 +18,5 @@ router.post('/login',login);
 router.post('/signup',upload.single('pic'),signup);
 router.get('/findusers',auth,allusers)
 
+
 export default router;
