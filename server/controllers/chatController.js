@@ -2,7 +2,7 @@ import { Chat } from "../models/chatModel.js";
 import { User } from "../models/userModel.js";
 
 
-export const accesschat=async(req,res)=>{
+export const accesschat= async (req,res)=>{
     const {userId}=req.body;
 
     if(!userId){
@@ -64,15 +64,29 @@ export const fetchChats=async(req,res)=>{
 };
 
 export const createGroupChat=async(req,res)=>{
-    if(!req.body.groupName || !req.body.groupUsers){
+        if(!req.body.name || !req.body.newusers){
         return res.status(400).send({message:"Please Fill all the fields"});
     }
-    var users=JSON.parse(req.body.groupUsers);
-    if(users.length<2){
-        return res.status(400)
-        .send('More than two uers are required to form a group chat');
+    let users = JSON.parse(req.body.newusers);
+
+    if(users.length < 2){
+        return res.status(400).send({message:'More than two uers are required to form a group chat'});
     }
+    // console.log(req.user)
+    users.push(req.user);
+try{
+    const groupChat=await Chat.create({
+        chatName:req.body.name,
+        users:users,
+        isGroupChat:true,
+        groupAdmin:req.user,
+    })
+    const newGroupChat=await Chat.findOne({_id:groupChat._id})
+    .populate("users","-password")
+    .populate("groupAdmin","-password");
 
-    
+    res.status(200).json({newGroupChat});
 
-}
+ }catch(err){
+    res.status(400).json({message:err.message});
+ }}

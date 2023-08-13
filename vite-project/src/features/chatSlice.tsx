@@ -9,6 +9,7 @@ export interface Chat {
   chatName: string;
   isGroupChat: boolean;
   users: User[];
+  groupAmin?: User;
   createdAt: string;
   updatedAt: string;
   __v: number;

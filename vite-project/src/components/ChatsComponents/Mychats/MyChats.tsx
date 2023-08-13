@@ -7,12 +7,11 @@ import { Chats, chatsGetAll } from "@/features/chatSlice";
 import UserCard from "./UserCard";
 import { UserCardSkeleton } from "./UserCardSkeleton";
 import { CreateGroupChat } from "./CreateGroup";
-// import Chat from "../Chat";
+import { toast } from "react-hot-toast";
 
 const MyChats = () => {
+  const [groupCreated, setGroupCreated] = useState(false);
   const dispatch = useDispatch();
-
-  const { result } = JSON.parse(localStorage.getItem("profile") || "");
 
   const [loading, setLoading] = useState(true);
   const getUsers = async () => {
@@ -20,14 +19,14 @@ const MyChats = () => {
       const { data } = await axios.get("/chats/fetchChats");
       dispatch(chatsGetAll(data));
     } catch (err: any) {
-      console.log(err.response.data);
+      toast.error("Error in Fetching Chats. Please reload");
     } finally {
       setLoading(false);
     }
   };
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [groupCreated]);
   var userChats = useSelector((state: Chats) => state.chats);
   return (
     <div className=" basis-[40%] lg:basis-[30%] bg-muted flex flex-col ">
@@ -35,27 +34,23 @@ const MyChats = () => {
         <div className="font-medium text-xs sm:text-3xl ml-4 md:ml-6">
           My Chats
         </div>
-        <CreateGroupChat>
+        <CreateGroupChat
+          setGroupCreated={setGroupCreated}
+          groupCreated={groupCreated}
+        >
           <Button variant="outline" className=" mr-2  md:mr-4 h-10">
             <span className="text-xs"> Group Chat</span>
             <Plus className="h-8 w-8 pl-2" />
           </Button>
         </CreateGroupChat>
       </div>
-      <div className="w-[90%] mt-4 m-auto h-[600px] rounded-sm ">
+      <div className="w-[90%] mt-4 m-auto h-[600px] rounded-sm overflow-y-auto no-scrollbar">
         {!loading ? (
           //@ts-ignore
           userChats?.chats?.map((userChat, index) => {
-            return (
-              <UserCard
-                key={index}
-                name={
-                  userChat?.users[1]?.name !== result?.name
-                    ? userChat?.users[1]?.name
-                    : userChat?.users[0]?.name
-                }
-              />
-            );
+            let chat = userChat;
+
+            return <UserCard key={index} chat={chat} />;
           })
         ) : (
           <UserCardSkeleton />

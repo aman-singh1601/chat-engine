@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,8 +24,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FlipMove from "react-flip-move";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
+import { toast } from "react-hot-toast";
 
-export function CreateGroupChat({ children }: { children: React.ReactNode }) {
+export function CreateGroupChat({
+  children,
+  setGroupCreated,
+  groupCreated,
+}: {
+  children: React.ReactNode;
+  setGroupCreated: Dispatch<SetStateAction<boolean>>;
+  groupCreated: Boolean;
+}) {
   const ref = useRef();
   const [loading, setLoading] = useState(false);
 
@@ -66,18 +81,34 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      console.log(users);
-      console.log("name", name);
+      const newusers = JSON.stringify(users);
       const { data } = await axios.post("/chats/creategroupchat", {
         name,
-        users,
+        newusers,
       });
-      console.log(data);
+      if (data) {
+        setGroupCreated(!groupCreated);
+      }
+      console.log("groupdadta : ", data?.newGroupChat);
+      toast("Group Created!", {
+        icon: "👏",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } catch (err: any) {
-      console.log(err.message);
+      console.log(err.response);
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
+  };
+  const handleDelete = (friend: User) => {
+    const newusers = users?.filter((user) => user.email !== friend.email);
+    setUsers(newusers);
+    if (displayList) setDisplayList([...displayList, friend]);
   };
 
   return (
@@ -120,6 +151,7 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
                 <Badge
                   key={index}
                   variant="default"
+                  onClick={() => handleDelete(friend)}
                   className="flex space-x-2 my-1 h-5 w-fit text-sm items-center cursor-pointer rounded-sm"
                 >
                   <span className="text-white mr-1">
@@ -169,9 +201,11 @@ export function CreateGroupChat({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleSubmit} disabled={loading}>
-            Create
-          </Button>
+          <DialogTrigger>
+            <Button onClick={handleSubmit} disabled={loading}>
+              Create
+            </Button>
+          </DialogTrigger>
         </DialogFooter>
       </DialogContent>
     </Dialog>

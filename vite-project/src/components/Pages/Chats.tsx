@@ -5,6 +5,7 @@ import Chat from "../ChatsComponents/Chat";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authSignin } from "@/features/userSlice";
+import { toast } from "react-hot-toast";
 
 const Chats = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Chats = () => {
         email={user?.result?.email}
         pic={user?.result?.pic}
       />
-      <div className="flex mt-4">
+      <div className="flex mt-4 ">
         <MyChats />
         <Chat />
       </div>

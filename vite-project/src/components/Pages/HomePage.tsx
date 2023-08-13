@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import axios from "../../axios";
-import { toast } from "react-hot-toast/headless";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { authSignin } from "@/features/userSlice";
 const HomePage = () => {
@@ -50,6 +50,7 @@ const HomePage = () => {
         const res = await axios.post("/user/signup", formdata);
         console.log(res.data);
         dispatch(authSignin(res.data));
+        toast.success("User Signed In");
       } else {
         const newdata = {
           email: `${data.email}`,
@@ -58,12 +59,12 @@ const HomePage = () => {
         const res = await axios.post("user/login", newdata);
         console.log(res);
         dispatch(authSignin(res.data));
+        toast("User Logged In");
       }
       window.location.assign("/chats");
       // navigate("/chats");
     } catch (err: any) {
-      toast.error("Something went wrong");
-      console.error(err.response.data);
+      toast.error(`${err.response.data.message}`);
     } finally {
       setLoading(false);
     }
