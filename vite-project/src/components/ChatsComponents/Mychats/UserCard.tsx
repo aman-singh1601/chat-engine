@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { setActiveChat } from "@/features/activeChat";
 import { Chat } from "@/features/chatSlice";
 import { Users } from "lucide-react";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 
 const UserCard = ({ chat }: { chat: Chat }) => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MainNav from "../ChatsComponents/MainNav";
 import MyChats from "../ChatsComponents/Mychats/MyChats";
 import Chat from "../ChatsComponents/Chat";
@@ -13,6 +13,9 @@ const Chats = () => {
   useEffect(() => {
     dispatch(authSignin(user));
   }, []);
+
+  const [selectedChat, setSelectedChat] = useState(false);
+  // const memoizedChat = useMemo(() => <Chat />, [selectedChat]);
 
   return (
     <div className="flex flex-col ">

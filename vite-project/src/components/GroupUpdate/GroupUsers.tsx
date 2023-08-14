@@ -13,7 +13,7 @@ export const GroupUser = ({
   setDeletedUsers: Dispatch<SetStateAction<User | null>>;
 }) => {
   return (
-    <div className="relative bg-slate-100 duration-300 hover:bg-slate-500 rounded-md py-2  mb-2 w-full items-center">
+    <div className="relative bg-slate-100 duration-300 hover:bg-slate-500 rounded-md py-2 w-full md:w-[50%] lg:w-[30%] pl-6  mb-2 items-center">
       <div className="flex items-center">
         <Avatar className="ml-4 h-8 w-8 mr-8">
           <AvatarImage

@@ -7,17 +7,13 @@ import {
   deleteUser,
   renameGroup,
 } from "@/features/activeChat";
-import {
-  Chat,
-  User,
-  deleteUserFromGroup,
-  editChatName,
-} from "@/features/chatSlice";
+import { User, deleteUserFromGroup, editChatName } from "@/features/chatSlice";
 import axios from "@/axios";
-import { Pencil, Trash } from "lucide-react";
+import { MoveLeft, Pencil, Trash } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 interface currentChatProps {
   activeChat: activeChatProps;
@@ -47,8 +43,15 @@ export const GroupSettings = () => {
       if (deletedUser) {
         dispatch(deleteUser(deletedUser));
         dispatch(deleteUserFromGroup(data));
+        toast("User Deleted!", {
+          icon: "👏",
+          style: {
+            borderRadius: "10px",
+            background: "#0a0a0a",
+            color: "#ffffff",
+          },
+        });
       }
-      console.log("deleted Users data : ", data);
     }
   }, [deletedUser]);
 
@@ -92,7 +95,14 @@ export const GroupSettings = () => {
       />
       <div className="bg-white flex flex-col rounded-md mt-2 w-full h-full p-4">
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-sans font-medium">Group Settings</span>
+          <div className="flex space-x-2 items-center">
+            <Link to="/chats">
+              <MoveLeft className="h-6 w-6 cursor-pointer" />
+            </Link>
+            <span className="text-2xl font-sans font-medium">
+              Group Settings
+            </span>
+          </div>
           {activeChat?.groupAmin?.email !== currentUser.email && (
             <Button
               variant="destructive"

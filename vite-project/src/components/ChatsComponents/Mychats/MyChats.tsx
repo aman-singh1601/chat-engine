@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import axios from "@/axios";
 import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Chats, chatsGetAll } from "@/features/chatSlice";
+import { Chat, Chats, User, chatsGetAll } from "@/features/chatSlice";
 import UserCard from "./UserCard";
 import { UserCardSkeleton } from "./UserCardSkeleton";
 import { CreateGroupChat } from "./CreateGroup";
@@ -27,7 +27,9 @@ const MyChats = () => {
   useEffect(() => {
     getUsers();
   }, [groupCreated]);
+
   var userChats = useSelector((state: Chats) => state.chats);
+
   return (
     <div className=" basis-[40%] lg:basis-[30%] bg-muted flex flex-col ">
       <div className="flex justify-between mt-2 ">
