@@ -37,10 +37,17 @@ const chatsSlice = createSlice({
     },
     chatsAddChat: (state, action: PayloadAction<Chat>) => {
       state.chats?.unshift(action?.payload);
-      console.log(state.chats);
+    },
+    editChatName: (state, action: PayloadAction<Chat>) => {
+      const newChats = state.chats?.filter(
+        (chat) => chat._id != action.payload._id
+      );
+      if (newChats) state.chats = newChats;
+
+      state.chats?.unshift(action?.payload);
     },
   },
 });
 
 export default chatsSlice.reducer;
-export const { chatsAddChat, chatsGetAll } = chatsSlice.actions;
+export const { chatsAddChat, chatsGetAll, editChatName } = chatsSlice.actions;

@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import MainNav from "../ChatsComponents/MainNav";
 import MyChats from "../ChatsComponents/Mychats/MyChats";
 import Chat from "../ChatsComponents/Chat";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { authSignin } from "@/features/userSlice";
-import { toast } from "react-hot-toast";
 
 const Chats = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   // @ts-ignore
   const user = JSON.parse(localStorage.getItem("profile"));

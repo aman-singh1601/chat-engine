@@ -90,3 +90,28 @@ try{
  }catch(err){
     res.status(400).json({message:err.message});
  }}
+
+ export const renameGroup=async(req,res)=>{
+    try{
+    const {chatId,chatName}=req.body;
+
+    const updatedChat=await Chat.findByIdAndUpdate(
+        chatId,
+        {
+            chatName:chatName,
+        },
+        {
+            new:true,
+        }
+    ).populate("users","-password")
+    .populate("groupAdmin", "-password");
+    if(!updatedChat){
+        return res.status(400).json({message:"Chat not Found"})
+    }else{
+        res.status(200).json(updatedChat);
+    }
+    }catch(err){
+        res.status(500).json(err);
+    }
+
+ }

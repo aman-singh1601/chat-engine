@@ -12,7 +12,7 @@ interface User {
   name: string;
   email: string;
   pic: string;
-  password: string;
+  password?: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
