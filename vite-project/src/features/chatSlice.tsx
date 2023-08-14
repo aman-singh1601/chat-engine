@@ -46,8 +46,17 @@ const chatsSlice = createSlice({
 
       state.chats?.unshift(action?.payload);
     },
+    deleteUserFromGroup: (state, action: PayloadAction<Chat>) => {
+      const newChats = state.chats?.filter(
+        (chat) => chat._id != action.payload._id
+      );
+      if (newChats) state.chats = newChats;
+
+      state.chats?.unshift(action?.payload);
+    },
   },
 });
 
 export default chatsSlice.reducer;
-export const { chatsAddChat, chatsGetAll, editChatName } = chatsSlice.actions;
+export const { chatsAddChat, chatsGetAll, editChatName, deleteUserFromGroup } =
+  chatsSlice.actions;

@@ -7,7 +7,12 @@ import {
   deleteUser,
   renameGroup,
 } from "@/features/activeChat";
-import { Chat, User, editChatName } from "@/features/chatSlice";
+import {
+  Chat,
+  User,
+  deleteUserFromGroup,
+  editChatName,
+} from "@/features/chatSlice";
 import axios from "@/axios";
 import { Pencil, Trash } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -30,15 +35,21 @@ export const GroupSettings = () => {
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState(activeChat?.chatName);
-  const [deletedUsers, setDeletedUsers] = useState<User[] | []>([]);
-
   const [deletedUser, setDeletedUser] = useState<User | null>(null);
-  useMemo(() => {
+  useMemo(async () => {
     if (deletedUser) {
-      dispatch(deleteUser(deletedUser));
-      setDeletedUsers([...deletedUsers, deletedUser]);
+      let putData = {
+        chatId: activeChat?._id,
+        userId: deletedUser?._id,
+      };
+
+      const { data } = await axios.put("/chats/removeusers", putData);
+      if (deletedUser) {
+        dispatch(deleteUser(deletedUser));
+        dispatch(deleteUserFromGroup(data));
+      }
+      console.log("deleted Users data : ", data);
     }
-    console.log("new user list : ", activeChat?.users);
   }, [deletedUser]);
 
   //not for admin;
@@ -46,7 +57,7 @@ export const GroupSettings = () => {
 
   const handleName = async () => {
     try {
-      const putData = {
+      let putData = {
         chatId: activeChat?._id,
         chatName: name,
       };
@@ -56,8 +67,8 @@ export const GroupSettings = () => {
           icon: "👏",
           style: {
             borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
+            background: "#0a0a0a",
+            color: "#ffffff",
           },
         });
         dispatch(renameGroup(data.chatName));

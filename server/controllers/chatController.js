@@ -115,3 +115,22 @@ try{
     }
 
  }
+ 
+ export const removeFromGroup =async (req,res)=>{
+    const {chatId,userId}=req.body;
+    
+    const removed=await Chat.findByIdAndUpdate(
+        chatId,
+        {
+            $pull:{users:userId},
+        },{
+            new:true,
+        }
+    ).populate("users","-passoword")
+    .populate("groupAdmin","-password");
+    if(!removed){
+        res.status(404).json({message:"Chat Not Found"});
+    }else{
+        res.status(200).json(removed);
+    }
+ }
