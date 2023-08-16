@@ -15,13 +15,25 @@ const commonDataSlice = createSlice({
     sendNotification: (state, action: PayloadAction<messageProps>) => {
       if (state.notificationData === null) {
         state.notificationData = [action.payload];
-      } else if (state.notificationData[0]._id !== action.payload._id) {
+      } else if (state.notificationData[0]._id !== action?.payload?._id) {
         state.notificationData.unshift(action.payload);
       }
+    },
+    seen: (state, action: PayloadAction<messageProps>) => {
+      if (state.notificationData !== null) {
+        const newList = state.notificationData.filter(
+          (notification) => notification._id !== action.payload._id
+        );
+        if (newList.length == 0) {
+          state.notificationData = null;
+        } else state.notificationData = newList;
+      }
+
+      console.log("commonData : ", state.notificationData);
     },
   },
 });
 
 export default commonDataSlice.reducer;
 
-export const { sendNotification } = commonDataSlice.actions;
+export const { sendNotification, seen } = commonDataSlice.actions;

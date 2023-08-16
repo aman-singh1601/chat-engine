@@ -1,8 +1,6 @@
 import React from "react";
 import { AvatarDemo } from "./Avatar";
 import SheetButton from "./SheetButton";
-import { Bell } from "lucide-react";
-import { Badge } from "../ui/badge";
 import { Notifications } from "./Notifications";
 
 interface MainNavProps {
