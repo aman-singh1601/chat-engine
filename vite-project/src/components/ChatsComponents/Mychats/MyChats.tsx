@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import axios from "@/axios";
 import { Plus } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Chat, Chats, User, chatsGetAll } from "@/features/chatSlice";
-import UserCard from "./UserCard";
+import { Chats, chatsGetAll } from "@/features/chatSlice";
+import { MemoizedUserCard } from "./UserCard";
 import { UserCardSkeleton } from "./UserCardSkeleton";
 import { CreateGroupChat } from "./CreateGroup";
 import { toast } from "react-hot-toast";
@@ -29,6 +29,7 @@ const MyChats = () => {
   }, [groupCreated]);
 
   var userChats = useSelector((state: Chats) => state.chats);
+  const memoizedChats = useMemo(() => userChats, [userChats]);
 
   return (
     <div className=" basis-[40%] lg:basis-[30%] bg-muted flex flex-col ">
@@ -49,10 +50,9 @@ const MyChats = () => {
       <div className="w-[90%] mt-4 m-auto h-[600px] rounded-sm overflow-y-auto no-scrollbar">
         {!loading ? (
           //@ts-ignore
-          userChats?.chats?.map((userChat, index) => {
+          memoizedChats?.chats?.map((userChat, index) => {
             let chat = userChat;
-
-            return <UserCard key={index} chat={chat} />;
+            return <MemoizedUserCard key={index} chat={chat} />;
           })
         ) : (
           <UserCardSkeleton />

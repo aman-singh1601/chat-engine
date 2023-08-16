@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-lottie-player": "^1.5.4",
+    "socket.io": "^4.7.2"
+  }
+}

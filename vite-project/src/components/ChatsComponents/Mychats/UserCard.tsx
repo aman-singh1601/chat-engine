@@ -50,4 +50,4 @@ const UserCard = ({ chat }: { chat: Chat }) => {
   );
 };
 
-export default UserCard;
+export const MemoizedUserCard = React.memo(UserCard);
