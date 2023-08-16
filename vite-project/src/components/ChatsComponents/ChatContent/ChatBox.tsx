@@ -91,8 +91,10 @@ const ChatBox = () => {
         !selectedChatCompare ||
         selectedChatCompare?._id !== newMessageRecieved.chat._id
       ) {
-        if (!notificationData?.includes(newMessageRecieved)) {
-          // console.log("ehllo");
+        if (
+          notificationData === null ||
+          notificationData?.indexOf(newMessageRecieved) === -1
+        ) {
           dispatch(sendNotification(newMessageRecieved));
         }
       } else {

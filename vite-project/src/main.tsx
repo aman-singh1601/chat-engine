@@ -7,8 +7,10 @@ import store from "./app/store.tsx";
 import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Provider store={store}>
-    <Toaster />
-    <App />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <Toaster />
+      <App />
+    </Provider>
+  </React.StrictMode>
 );

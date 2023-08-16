@@ -15,10 +15,9 @@ const commonDataSlice = createSlice({
     sendNotification: (state, action: PayloadAction<messageProps>) => {
       if (state.notificationData === null) {
         state.notificationData = [action.payload];
-      } else {
+      } else if (state.notificationData[0]._id !== action.payload._id) {
         state.notificationData.unshift(action.payload);
       }
-      console.log(state.notificationData);
     },
   },
 });
