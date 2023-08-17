@@ -24,7 +24,7 @@ const Chats = () => {
         email={user?.result?.email}
         pic={user?.result?.pic}
       />
-      <div className="flex mt-4 ">
+      <div className="flex mt-4 h-[90vh]">
         <MyChats />
         <Chat />
       </div>

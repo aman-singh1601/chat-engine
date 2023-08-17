@@ -42,8 +42,7 @@ const UserCard = ({ chat }: { chat: Chat }) => {
         </span>
         <span className="text-sm">
           <strong>Message : </strong>
-
-          {}
+          {chat?.latestMessage?.content}
         </span>
       </div>
     </div>

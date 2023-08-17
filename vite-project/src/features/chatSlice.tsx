@@ -1,3 +1,4 @@
+import { messageProps } from "@/components/ChatsComponents/ChatContent/ChatBox";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { useMemo } from "react";
 
@@ -10,6 +11,7 @@ export interface Chat {
   chatName: string;
   isGroupChat: boolean;
   users: User[];
+  latestMessage?: messageProps;
   groupAmin?: User;
   createdAt: string;
   updatedAt: string;

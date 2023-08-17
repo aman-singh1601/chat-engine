@@ -143,8 +143,8 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col  rounded-md mt-2 w-full h-full">
-      <div className="w-full h-[585px] p-2 bg-muted flex flex-col justify-end overflow-y-auto no-scrollbar">
+    <div className="bg-white flex flex-col rounded-md mt-2 w-full h-[700px] sm:h-[600px] lg:h-[600px] ">
+      <div className="w-full p-2 bg-muted flex flex-col justify-end overflow-y-auto no-scrollbar">
         <ScrollableFeed>
           {loading ? (
             <MessageSkeleton />
@@ -203,7 +203,7 @@ const ChatBox = () => {
           <></>
         )}
         <Input
-          className="text-base font-sans "
+          className="text-base font-sans"
           value={content}
           onChange={(e) => typingHandler(e)}
           placeholder="type..."

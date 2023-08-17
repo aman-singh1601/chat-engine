@@ -15,7 +15,7 @@ const Chat = () => {
   const isGroup = activeChat?.isGroupChat;
 
   return (
-    <div className="basis-[100%] ml-4 lg:basis-[70%] bg-muted flex flex-col rounded-md px-4 py-2">
+    <div className="basis-[90%] ml-4 lg:basis-[70%] bg-muted flex flex-col rounded-md px-4 py-2">
       {activeChat ? (
         <>
           <div className="header flex justify-between items-center">
