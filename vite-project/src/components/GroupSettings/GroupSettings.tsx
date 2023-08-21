@@ -6,6 +6,7 @@ import {
   activeChatProps,
   deleteUser,
   renameGroup,
+  setActiveChat,
 } from "@/features/activeChat";
 import { User, deleteUserFromGroup, editChatName } from "@/features/chatSlice";
 import axios from "@/axios";
@@ -13,13 +14,14 @@ import { MoveLeft, Pencil, Trash } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface currentChatProps {
   activeChat: activeChatProps;
 }
 
 export const GroupSettings = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { activeChat } = useSelector(
     (state: currentChatProps) => state.activeChat
@@ -60,6 +62,17 @@ export const GroupSettings = () => {
     try {
       const { data } = await axios.put("/chats/deletegroup", { activeChat });
       console.log(data);
+      setOpen(false);
+      dispatch(setActiveChat(null));
+      navigate("/chats", { replace: true });
+      toast("Group Leaved", {
+        icon: "👏",
+        style: {
+          borderRadius: "10px",
+          background: "#0a0a0a",
+          color: "#ffffff",
+        },
+      });
     } catch (err: any) {
       console.log(err.response.data);
     }

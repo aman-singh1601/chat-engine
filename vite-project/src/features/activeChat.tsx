@@ -13,7 +13,7 @@ const activeChatSlice = createSlice({
   name: "activeChat",
   initialState,
   reducers: {
-    setActiveChat: (state, action: PayloadAction<Chat>) => {
+    setActiveChat: (state, action: PayloadAction<Chat | null>) => {
       state.activeChat = action?.payload;
     },
     deleteUser: (state, action: PayloadAction<User>) => {
