@@ -22,7 +22,6 @@ export const Notifications = () => {
   const { notificationData } = useSelector(
     (state: newMessageRecievedProps) => state.commonData
   );
-  console.log("notification: ", notificationData);
   const handleClick = (notification: messageProps) => {
     dispatch(setActiveChat(notification.chat));
     dispatch(seen(notification));

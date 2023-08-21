@@ -12,7 +12,7 @@ export interface Chat {
   isGroupChat: boolean;
   users: User[];
   latestMessage?: messageProps;
-  groupAmin?: User;
+  groupAdmin?: User;
   createdAt: string;
   updatedAt: string;
   __v: number;

@@ -30,7 +30,7 @@ export const GroupSettings = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [name, setName] = useState(activeChat?.chatName);
+  const [name, setName] = useState(activeChat?.groupAdmin?.name);
   const [deletedUser, setDeletedUser] = useState<User | null>(null);
   useMemo(async () => {
     if (deletedUser) {
@@ -56,7 +56,14 @@ export const GroupSettings = () => {
   }, [deletedUser]);
 
   //not for admin;
-  const LeaveGroup = () => {};
+  const LeaveGroup = async () => {
+    try {
+      const { data } = await axios.put("/chats/deletegroup", { activeChat });
+      console.log(data);
+    } catch (err: any) {
+      console.log(err.response.data);
+    }
+  };
 
   const handleName = async () => {
     try {
@@ -82,7 +89,8 @@ export const GroupSettings = () => {
       toast.error("Something went wrong. Please try again.");
     }
   };
-
+  console.log(activeChat);
+  console.log("name: ", activeChat?.groupAdmin);
   return (
     <>
       <AlertModal
@@ -94,7 +102,7 @@ export const GroupSettings = () => {
         loading={loading}
       />
       <div className="bg-white flex flex-col rounded-md mt-2 w-full h-full p-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between    items-center">
           <div className="flex space-x-2 items-center">
             <Link to="/chats">
               <MoveLeft className="h-6 w-6 cursor-pointer" />
@@ -103,15 +111,14 @@ export const GroupSettings = () => {
               Group Settings
             </span>
           </div>
-          {activeChat?.groupAmin?.email !== currentUser.email && (
-            <Button
-              variant="destructive"
-              className="items-center"
-              onClick={() => setOpen(true)}
-            >
-              <Trash className="h-5 w-5" />
-            </Button>
-          )}
+
+          <Button
+            variant="destructive"
+            className="items-center"
+            onClick={() => setOpen(true)}
+          >
+            <Trash className="h-5 w-5" />
+          </Button>
         </div>
         <div className="mt-4 flex space-x-2 items-center">
           <span className="text-md font-sans font-medium">Edit Name</span>
@@ -127,6 +134,14 @@ export const GroupSettings = () => {
           >
             <Pencil className=" text-black" />
           </Button>
+          {activeChat?.isGroupChat ? (
+            <div className="flex space-x-1 items-center">
+              <span className="text-xl font-semibold">Admin : </span>
+              <span className="text-md font-medium">
+                {activeChat.groupAdmin?.name}
+              </span>
+            </div>
+          ) : null}
         </div>
         <div className="mt-4 flex flex-col max-h-[400px] overflow-y-scroll no-scrollbar">
           {activeChat?.users.map((user) => (

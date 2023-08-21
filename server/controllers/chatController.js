@@ -134,3 +134,41 @@ try{
         res.status(200).json(removed);
     }
  }
+ export const deleteGroup=async (req,res)=>{
+    const {activeChat}=req.body;
+    try{
+        let userId=req.user._id
+        const userIdString=userId.toString();
+      let isAdmin=activeChat.groupAdmin._id===userIdString;
+      const newAdmin=activeChat.users[0]._id!==req.user._id?activeChat.users[0]:activeChat.users[1];
+      if(isAdmin && newAdmin){
+
+        const updated= await Chat.findByIdAndUpdate(
+            activeChat._id,
+            {
+                groupAdmin: newAdmin
+            },{
+                new:true
+            }
+         )
+      }
+       const removed=await Chat.findByIdAndUpdate(
+        activeChat._id,
+        {
+            $pull:{users:req.user._id},
+        },{
+            new:true,
+        }
+    ).populate("users","-passoword")
+    .populate("groupAdmin","-password");
+    if(!removed){
+        res.status(404).json({message:"Chat Not Found"});
+    }else{
+        res.status(200).json(removed);
+    }
+
+    }catch(err){
+        res.status(500).json(err);
+    }
+    
+ }

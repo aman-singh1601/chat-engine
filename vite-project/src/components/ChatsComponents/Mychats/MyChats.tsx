@@ -30,7 +30,6 @@ const MyChats = () => {
 
   var userChats = useSelector((state: Chats) => state.chats);
   const memoizedChats = useMemo(() => userChats, [userChats]);
-  console.log("first", memoizedChats);
   return (
     <div className=" basis-[40%] lg:basis-[30%] bg-muted flex flex-col ">
       <div className="flex justify-between mt-2 ">
