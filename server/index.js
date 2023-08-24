@@ -23,19 +23,6 @@ app.use('/user', userRouter)
 app.use('/chats', chatsRouter)
 app.use('/messages',messagesRouter)
 
-// --------------deployment---------------
-// const __dirname1=path.resolve();
-// if(process.env.NODE_ENV==='production'){
-//   app.use(express.static(path.join(__dirname1,'/frontend/dist')));
-//   app.get("*",(req,res)=>{
-//     app.use(path.resolve(__dirname1,'frontend','build','index.html'));
-//   })
-// }else{
-//     app.get('/',(req,res)=>{
-//         res.send("API is running successfully")
-//     })
-// }
-// --------------deployment---------------
 
 
 const PORT =process.env.PORT;
@@ -48,7 +35,7 @@ mongoose.connect(CONNECTION_URL)
     const io=new Server(server,{
         pingTimeout: 60000,
         cors:{
-            origin:'http://localhost:5173'
+            origin:'https://chat-engine-8hms.vercel.app/'
         }
     })
     io.on("connection",(socket)=>{
