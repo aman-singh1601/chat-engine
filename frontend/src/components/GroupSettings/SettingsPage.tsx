@@ -1,4 +1,3 @@
-import React from "react";
 import MainNav from "../ChatsComponents/MainNav";
 import { GroupSettings } from "./GroupSettings";
 

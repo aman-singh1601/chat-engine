@@ -1,9 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentChatProps,
-  messageProps,
-  newMessageRecievedProps,
-} from "./ChatContent/ChatBox";
+import { messageProps, newMessageRecievedProps } from "./ChatContent/ChatBox";
 import { Bell } from "lucide-react";
 import { Badge } from "../ui/badge";
 import {

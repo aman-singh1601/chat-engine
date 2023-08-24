@@ -30,7 +30,7 @@ export const GroupSettings = () => {
   const currentUser: User = JSON.parse(localStorage.getItem("profile"));
 
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const [name, setName] = useState(activeChat?.groupAdmin?.name);
   const [deletedUser, setDeletedUser] = useState<User | null>(null);

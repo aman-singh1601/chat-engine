@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import HomePage from "./components/Pages/HomePage";
 import Chats from "./components/Pages/Chats";
-import { GroupSettings } from "./components/GroupSettings/GroupSettings";
 import { SettingsPage } from "./components/GroupSettings/SettingsPage";
 
 function App() {

@@ -2,7 +2,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "@/axios";
 import { useDispatch } from "react-redux";
 import { chatsAddChat } from "@/features/chatSlice";
-import { useState } from "react";
 import { SheetClose } from "@/components/ui/sheet";
 
 type searchUserProps = {

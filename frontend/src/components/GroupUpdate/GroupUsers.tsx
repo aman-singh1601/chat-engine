@@ -5,7 +5,6 @@ import { Trash } from "lucide-react";
 
 export const GroupUser = ({
   user,
-  DeletedUsers,
   setDeletedUsers,
   grpAdmin,
 }: {

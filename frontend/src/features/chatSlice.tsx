@@ -1,6 +1,5 @@
 import { messageProps } from "@/components/ChatsComponents/ChatContent/ChatBox";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { useMemo } from "react";
 
 export interface Chats {
   chats: Chat[] | null;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -12,7 +11,6 @@ import { Button } from "./button";
 import { Input } from "./input";
 import axios from "../../axios";
 import SearchUsers from "../ChatsComponents/SearchUsers/SearchUsers";
-import { useDispatch } from "react-redux";
 
 type userData = {
   email: string;

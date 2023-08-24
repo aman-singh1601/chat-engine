@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown, LogOut, Mail, User } from "lucide-react";
 import { Button } from "../ui/button";
-import decode from "jwt-decode";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useDispatch } from "react-redux";
 import { authLogout } from "@/features/userSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 //http://localhost:5000/uploads/profilePic/1691581008065-zoro.jpg
@@ -30,7 +29,6 @@ interface MyToken {
 }
 export function AvatarDemo({ pic, name, email }: AvatarProps) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [user, setUser] = useState(
