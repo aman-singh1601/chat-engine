@@ -37,7 +37,7 @@ const UserCard = ({
     >
       <Avatar className="ml-4 h-10 w-10 mr-4">
         <AvatarImage
-          src={`http://localhost:5000/uploads/profilePic/${pic}`}
+          src={`https://chatapp-pivy.onrender.com/uploads/profilePic/${pic}`}
           alt="@shadcn"
         />
         <AvatarFallback>{isGroup && <Users />}</AvatarFallback>

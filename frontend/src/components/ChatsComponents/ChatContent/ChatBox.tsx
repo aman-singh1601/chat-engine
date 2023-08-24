@@ -34,7 +34,7 @@ export interface messageProps {
   sender: User;
 }
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://chatapp-pivy.onrender.com";
 
 var socket: any, selectedChatCompare: any;
 
