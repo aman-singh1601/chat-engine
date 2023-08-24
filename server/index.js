@@ -35,7 +35,7 @@ mongoose.connect(CONNECTION_URL)
     const io=new Server(server,{
         pingTimeout: 60000,
         cors:{
-            origin:'https://chat-engine-8hms.vercel.app/'
+            origin:'https://chat-engine-8hms.vercel.app'
         }
     })
     io.on("connection",(socket)=>{
