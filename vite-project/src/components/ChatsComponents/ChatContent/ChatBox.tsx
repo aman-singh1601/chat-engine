@@ -143,15 +143,18 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col rounded-md mt-2 w-full h-[700px] sm:h-[600px] lg:h-[600px] ">
-      <div className="w-full p-2 bg-muted flex flex-col justify-end overflow-y-auto no-scrollbar">
+    <div className="bg-white flex flex-col rounded-md mt-2 w-full min-h-[85%] md:h-[700px] sm:h-[600px] lg:h-[600px] ">
+      <div className="w-full p-2 bg-muted flex flex-col min-h-[80%] justify-end overflow-y-auto no-scrollbar">
         <ScrollableFeed>
           {loading ? (
             <MessageSkeleton />
           ) : (
             activeMessages &&
             activeMessages.map((m, i) => (
-              <div key={m._id} className="flex space-x-1  items-center">
+              <div
+                key={m._id}
+                className="flex space-x-1 basis-[80%]  items-center"
+              >
                 {(isSameSender(activeMessages, m, i, result._id) ||
                   isLastMessage(activeMessages, i, result._id)) && (
                   <Avatar className="ml-4 h-8 w-8 mr-2">
@@ -165,7 +168,7 @@ const ChatBox = () => {
                   </Avatar>
                 )}
                 <div
-                  className={`w-fit font-medium rounded-3xl my-1 p-2 px-3`}
+                  className={`w-fit font-medium rounded-3xl min-h-[90%] my-1 p-2 px-3`}
                   style={{
                     backgroundColor: `${
                       m.sender._id === result._id ? `#ffffff` : `#141414`

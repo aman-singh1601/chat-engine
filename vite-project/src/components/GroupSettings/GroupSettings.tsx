@@ -57,7 +57,6 @@ export const GroupSettings = () => {
     }
   }, [deletedUser]);
 
-  //not for admin;
   const LeaveGroup = async () => {
     try {
       const { data } = await axios.put("/chats/deletegroup", { activeChat });
@@ -157,14 +156,17 @@ export const GroupSettings = () => {
           ) : null}
         </div>
         <div className="mt-4 flex flex-col max-h-[400px] overflow-y-scroll no-scrollbar">
-          {activeChat?.users.map((user) => (
-            <GroupUser
-              key={user._id}
-              setDeletedUsers={setDeletedUser}
-              DeletedUsers={deletedUser}
-              user={user}
-            />
-          ))}
+          {activeChat?.users.map((user) =>
+            user._id !== activeChat.groupAdmin?._id ? (
+              <GroupUser
+                key={user._id}
+                setDeletedUsers={setDeletedUser}
+                DeletedUsers={deletedUser}
+                grpAdmin={activeChat?.groupAdmin}
+                user={user}
+              />
+            ) : null
+          )}
         </div>
         <Button className="w-fit py-2 mt-4 justify-end" disabled={loading}>
           Save Changes

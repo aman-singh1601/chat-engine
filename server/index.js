@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import  bodyParser  from 'body-parser'
 import 'dotenv/config'
 import  mongoose from 'mongoose'
@@ -21,6 +22,17 @@ app.use('/uploads',express.static('uploads'))
 app.use('/user', userRouter)
 app.use('/chats', chatsRouter)
 app.use('/messages',messagesRouter)
+
+// --------------deployment---------------
+const __dirname1=path.resolve();
+if(process.env.NODE_ENV==='production'){
+
+}else{
+    app.get('/',(req,res)=>{
+        res.send("API is running successfully")
+    })
+}
+// --------------deployment---------------
 
 
 const PORT =process.env.PORT;

@@ -6,7 +6,13 @@ import { Users, Users2 } from "lucide-react";
 import React, { Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 
-const UserCard = ({ chat }: { chat: Chat }) => {
+const UserCard = ({
+  chat,
+  setChatSelected,
+}: {
+  chat: Chat;
+  setChatSelected: Dispatch<SetStateAction<boolean>>;
+}) => {
   const isGroup = chat.isGroupChat;
   const { result } = JSON.parse(localStorage.getItem("profile") || "");
   const pic = isGroup
@@ -20,10 +26,14 @@ const UserCard = ({ chat }: { chat: Chat }) => {
   const handleActiveChat = (chat: Chat) => {
     dispatch(setActiveChat(chat));
   };
+  const handleClick = () => {
+    handleActiveChat(chat);
+    setChatSelected(true);
+  };
   return (
     <div
       className="flex relative space-x-2 bg-white duration-200 hover:bg-slate-500 active:bg-slate-500 rounded-md py-2 mb-2 w-full items-center hover:cursor-pointer"
-      onClick={() => handleActiveChat(chat)}
+      onClick={handleClick}
     >
       <Avatar className="ml-4 h-10 w-10 mr-4">
         <AvatarImage

@@ -7,11 +7,15 @@ export const GroupUser = ({
   user,
   DeletedUsers,
   setDeletedUsers,
+  grpAdmin,
 }: {
   user: User;
   DeletedUsers: User | null;
   setDeletedUsers: Dispatch<SetStateAction<User | null>>;
+  grpAdmin: User | undefined;
 }) => {
+  //@ts-ignore
+  const currentUser = JSON.parse(localStorage.getItem("profile"));
   return (
     <div className="relative bg-slate-100 duration-300 hover:bg-slate-500 rounded-md py-2 w-full md:w-[50%] lg:w-[30%] pl-6  mb-2 items-center">
       <div className="flex items-center">
@@ -37,7 +41,9 @@ export const GroupUser = ({
         </div>
       </div>
       <div className="absolute right-4 top-4 cursor-pointer">
-        <Trash className="h-5 w-5" onClick={() => setDeletedUsers(user)} />
+        {grpAdmin?._id === currentUser._id && (
+          <Trash className="h-5 w-5" onClick={() => setDeletedUsers(user)} />
+        )}
       </div>
     </div>
   );
